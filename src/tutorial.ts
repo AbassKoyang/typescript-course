@@ -117,7 +117,7 @@
 // const discountedPrice : number = calculateDiscount(200); // no error
 
 // //defualt parameter
-// // A parameter can have a default value which is used a if no argument is passsed when the function is invoke. he syntax is as follows:
+// // A parameter can have a default value which is used a if no argument is passsed when the function is invoked. The syntax is as follows:
 // const calculateScore = (initialScore: number, penaltyPoints: number = 0) : number => {
 //     return initialScore - penaltyPoints;
 // }
@@ -491,7 +491,7 @@ const discountedBook: Book & {discount: number} = {
 // console.log(resultUser);
 
 
-// // Type gaurding challenge
+// Type gaurding challenge
 
 // type valueType = string | number | boolean;
 // const  random = Math.random();
@@ -510,23 +510,30 @@ const discountedBook: Book & {discount: number} = {
 // checkValue(value);
 
 
-// challenge - truthy/falsy gaurd
+// // challenge - truthy/falsy gaurd
 
-function printLength(str : string | undefined | null) : void {
-    if(str){
-        console.log(str.length)
-    } else {
-        console.log('No string provided')
-    }
-}
-printLength('YOOOO!');
+// function printLength(str : string | undefined | null) : void {
+//     if(str){
+//         console.log(str.length)
+//     } else {
+//         console.log('No string provided')
+//     }
+// }
+// printLength('YOOOO!');
 
 
-// let eventDate = new Date('September 26, 2024 12:00:00').getTime();
-// // Update the countdown every secon
-//     let now = new Date().getTime(); // Get the current time
-//     let timeLeft = eventDate - now;
-//     let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-//     let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-//     let mins = Math.floor(((timeLeft % (1000 * 60 * 60)) / (1000 * 60))
-//     console.log(days, hours, mins)
+let eventDate = new Date('September 26, 2025 12:00:00').getTime();
+// Update the countdown every secon
+    let now = new Date().getTime(); // Get the current time
+    let secondsInAday = (60 * 60 * 24)
+    let secondsInAnHour = (60 * 60)
+    let secondsInAMinute = (60)
+    let timeLeft = eventDate - now;
+    timeLeft = timeLeft / 1000;
+    console.log(timeLeft);
+    let days = Math.floor(timeLeft / secondsInAday);
+    let hours = Math.floor((timeLeft % secondsInAday) / secondsInAnHour)
+    let mins = Math.floor(((timeLeft % secondsInAnHour) / secondsInAMinute))
+    console.log(days, hours, mins)
+
+  
