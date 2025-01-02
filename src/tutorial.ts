@@ -265,25 +265,25 @@
 
 // Intersection types
 
-type Book = { id: number; name: string; price: number };
-const book1: Book = {
-  id: 2,
-  name: 'How to Cook a Dragon',
-  price: 15,
-};
+// type Book = { id: number; name: string; price: number };
+// const book1: Book = {
+//   id: 2,
+//   name: 'How to Cook a Dragon',
+//   price: 15,
+// };
 
-const book2: Book = {
-  id: 3,
-  name: 'The Secret Life of Unicorns',
-  price: 18,
-};
+// const book2: Book = {
+//   id: 3,
+//   name: 'The Secret Life of Unicorns',
+//   price: 18,
+// };
 
-const discountedBook: Book & {discount: number} = {
-  id: 4,
-  name: 'Gnomes vs. Goblins: The Ultimate Guide',
-  price: 25,
-  discount: 0.15,
-};
+// const discountedBook: Book & {discount: number} = {
+//   id: 4,
+//   name: 'Gnomes vs. Goblins: The Ultimate Guide',
+//   price: 25,
+//   discount: 0.15,
+// };
 
 // Interface - Fundamentals
 
@@ -522,18 +522,78 @@ const discountedBook: Book & {discount: number} = {
 // printLength('YOOOO!');
 
 
-let eventDate = new Date('September 26, 2025 12:00:00').getTime();
-// Update the countdown every secon
-    let now = new Date().getTime(); // Get the current time
-    let secondsInAday = (60 * 60 * 24)
-    let secondsInAnHour = (60 * 60)
-    let secondsInAMinute = (60)
-    let timeLeft = eventDate - now;
-    timeLeft = timeLeft / 1000;
-    console.log(timeLeft);
-    let days = Math.floor(timeLeft / secondsInAday);
-    let hours = Math.floor((timeLeft % secondsInAday) / secondsInAnHour)
-    let mins = Math.floor(((timeLeft % secondsInAnHour) / secondsInAMinute))
-    console.log(days, hours, mins)
+// let eventDate = new Date('September 26, 2025 12:00:00').getTime();
+// // Update the countdown every secon
+//     let now = new Date().getTime(); // Get the current time
+//     let secondsInAday = (60 * 60 * 24)
+//     let secondsInAnHour = (60 * 60)
+//     let secondsInAMinute = (60)
+//     let timeLeft = eventDate - now;
+//     timeLeft = timeLeft / 1000;
+//     console.log(timeLeft);
+//     let days = Math.floor(timeLeft / secondsInAday);
+//     let hours = Math.floor((timeLeft % secondsInAday) / secondsInAnHour)
+//     let mins = Math.floor(((timeLeft % secondsInAnHour) / secondsInAMinute))
+//     console.log(days, hours, mins)
 
   
+
+// Generics
+
+// function genericFunction<T>(arg: T) : T {
+//     return arg;
+// }
+
+// const returnString = genericFunction<string>('Hello world!');
+// const returnNumber= genericFunction<number>(5);
+// console.log(returnString, returnNumber);
+
+
+// async function someFunc(): Promise<string>{
+//     return 'Hello world';
+// }
+// console.log(someFunc())
+
+
+// Fetching Data\
+
+import {z} from "zod";
+const url = 'https://www.course-api.com/react-tours-project';
+
+const tourSchema = z.object({
+    id: z.string(),
+    name: z.string(),
+    info: z.string(),
+    image: z.string(),
+    price: z.string(),
+    something: z.number()
+})
+type Tour = z.infer<typeof tourSchema>
+// type Tour = {
+//     id: string;
+//     name: string;
+//     info: string;
+//     image: string;
+//     price: string;
+// }
+
+async function fetchData(url: string) : Promise<Tour[]>{
+    try{
+        const response = await fetch(url);
+        if(!response.ok){
+            throw new Error(`Http error! status: ${response.status}`)
+        }
+        const rawData : Tour[] = await response.json();
+        const result = tourSchema.array().safeParse(rawData);
+        if(!result.success){
+            throw new Error(`Invalid data: ${result.error}`)
+        }
+        console.log(result);
+        return result.data;
+    } catch(error) {
+        const errorMsg = error instanceof Error ? error.message : 'There was an error';
+        console.log(errorMsg)
+    }
+}
+
+fetchData(url);
