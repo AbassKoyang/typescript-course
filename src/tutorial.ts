@@ -557,18 +557,18 @@
 
 // Fetching Data\
 
-import {z} from "zod";
-const url = 'https://www.course-api.com/react-tours-project';
+// import {z} from "zod";
+// const url = 'https://www.course-api.com/react-tours-project';
 
-const tourSchema = z.object({
-    id: z.string(),
-    name: z.string(),
-    info: z.string(),
-    image: z.string(),
-    price: z.string(),
-    something: z.number()
-})
-type Tour = z.infer<typeof tourSchema>
+// const tourSchema = z.object({
+//     id: z.string(),
+//     name: z.string(),
+//     info: z.string(),
+//     image: z.string(),
+//     price: z.string(),
+//     something: z.number()
+// })
+// type Tour = z.infer<typeof tourSchema>
 // type Tour = {
 //     id: string;
 //     name: string;
@@ -577,23 +577,65 @@ type Tour = z.infer<typeof tourSchema>
 //     price: string;
 // }
 
-async function fetchData(url: string) : Promise<Tour[]>{
-    try{
-        const response = await fetch(url);
-        if(!response.ok){
-            throw new Error(`Http error! status: ${response.status}`)
-        }
-        const rawData : Tour[] = await response.json();
-        const result = tourSchema.array().safeParse(rawData);
-        if(!result.success){
-            throw new Error(`Invalid data: ${result.error}`)
-        }
-        console.log(result);
-        return result.data;
-    } catch(error) {
-        const errorMsg = error instanceof Error ? error.message : 'There was an error';
-        console.log(errorMsg)
-    }
-}
+// async function fetchData(url: string) : Promise<Tour[]>{
+//     try{
+//         const response = await fetch(url);
+//         if(!response.ok){
+//             throw new Error(`Http error! status: ${response.status}`)
+//         }
+//         const rawData : Tour[] = await response.json();
+//         const result = tourSchema.array().safeParse(rawData);
+//         if(!result.success){
+//             throw new Error(`Invalid data: ${result.error}`)
+//         }
+//         console.log(result);
+//         return result.data;
+//     } catch(error) {
+//         const errorMsg = error instanceof Error ? error.message : 'There was an error';
+//         console.log(errorMsg)
+//     }
+// }
 
-fetchData(url);
+// fetchData(url);
+
+
+// Classes
+
+// class  Book {
+//     readonly title: string;
+//     readonly author: string;
+//     private checkedOut: boolean = false;
+
+//     constructor(title: string, author: string) {
+//         this.title = title;
+//         this.author = author;
+//     }
+//     public checkOut(){
+//         this.checkedOut = this.toggleCheckedOutStatus()
+//     };
+//     public isCheckedOut(){
+//         return this.checkedOut ? true : false;
+//     };
+//     private toggleCheckedOutStatus(){
+//         return !this.checkedOut;
+//     };
+// }
+// const newBook = new Book('Things Fall Apart', 'Chinua Achebe');
+// newBook.checkOut()
+// console.log(newBook.isCheckedOut())
+// console.log(newBook.checkedOut);
+
+// class Book {
+//     constructor(
+//         readonly author: string,
+//         public title: string,
+//         private someValue: number
+//     ){
+
+//     }
+//     public getSomeValue(){
+//         return this.someValue;
+//     }
+// }
+// const book = new Book('Things Fall Apart', 'Chinua Achebe', 45)
+// console.log(book.getSomeValue())
