@@ -9,8 +9,6 @@ type Task = {
     isCompleted: boolean;
 }
 
-
-
 let tasks : Task[] = loadTasks();
 function loadTasks() : Task[]|[]{
     const tasksLocal : Task[] | null = localStorage.getItem('tasks');
@@ -61,9 +59,3 @@ function renderTask(task : Task) : void {
 function updateStorage(){
     localStorage.setItem('tasks', JSON.stringify(tasks))
 }
-
-// localStorage.setItem('names', JSON.stringify([{name: 'boy', date:'boy'}]))
-// const storedNames = localStorage.getItem('names');
-// console.log(storedNames)
-// console.log(JSON.parse(storedNames))
-// localStorage.removeItem('tasks')
