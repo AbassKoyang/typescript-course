@@ -10,16 +10,15 @@ type Task = {
 }
 
 
-const tasksLocal : Task[] | null = JSON.parse(localStorage.getItem('tasks'));
-let tasks : Task[] = []
-if(tasksLocal)[
-    tasks = [...tasksLocal]
-]
-console.log(tasks)
-if(tasksLocal){
-    tasks.map((task: Task) => {
+
+let tasks : Task[] = loadTasks();
+function loadTasks() : Task[]|[]{
+    const tasksLocal : Task[] | null = localStorage.getItem('tasks');
+    return tasksLocal ? JSON.parse(tasksLocal) : [];
+}
+tasks.forEach((task) => {
     renderTask(task);
-})}
+});
 
 taskForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -41,18 +40,26 @@ taskForm.addEventListener('submit', (e) => {
 
 })
 
+
 function addTask(task : Task) : void {
     tasks.push(task)
-    if(tasks){
-        localStorage.setItem('tasks', JSON.stringify([...tasks]))
-    } else{
-        localStorage.setItem('tasks', JSON.stringify([task]))
-    }
+    updateStorage();
 }
 function renderTask(task : Task) : void {
     let newTaskItem = document.createElement('li');
-    newTaskItem.innerHTML = `<p>${task.description}</p> <br> <p>${task.isCompleted}</p>`
-    taskList.prepend(newTaskItem)
+    newTaskItem.textContent = task.description;
+    let checkBox = document.createElement('input');
+    checkBox.type = 'checkbox';
+    checkBox.checked = task.isComplete;
+    checkBox.addEventListener('change', () => {
+        task.isComplete = !task.isComplete;
+        updateStorage()
+    });
+    newTaskItem.appendChild(checkBox);
+    taskList.prepend(newTaskItem);
+}
+function updateStorage(){
+    localStorage.setItem('tasks', JSON.stringify(tasks))
 }
 
 // localStorage.setItem('names', JSON.stringify([{name: 'boy', date:'boy'}]))
